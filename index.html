@@ -5,8 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PostMaker</title>
+    <script src="js/render.js"></script>
 </head>
 <body>
-    
+   <canvas id="ctx"></canvas> 
+   <div id="example">
+       <h1>Chuck</h1>
+       <h2>E</h2>
+       <h3>Cheese</h3>
+   </div>
+
+   <script>
+       function demo() {
+
+        const myHTML = document.getElementById('example');
+        const canvas = document.getElementById('ctx');
+
+        const myRenderer = new Renderer(myHTML, canvas)
+        myRenderer.render(0,0,300,300);
+        myRenderer.export('jpeg')
+
+       }
+
+       demo()
+   </script>
 </body>
 </html>
