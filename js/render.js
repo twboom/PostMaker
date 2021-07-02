@@ -28,19 +28,24 @@ class Renderer {
         ctx.drawImage(img, x, y);
         }
         img.src = data;
+
+        ctx.moveTo(0,0);
     }
 
     // Export it as an image
     export(type) {
 
-        const canvas = this.canvas
-        console.log(canvas.toDataURL('image/jpeg'))
+        var canvas = this.canvas
+        var img    = canvas.toDataURL(`image/${type}`);
+        document.write('<img src="'+img+'"/>');
 
-        const download = document.createElement('a');
-        download.href = canvas.toDataURL(`image/${type}`)
-        download.download = 'PostMaker';
-        download.innerText = 'Donwload!'
-        document.body.appendChild(download)
+        // const canvas = this.canvas
+
+        // const download = document.createElement('a');
+        // download.href = canvas.toDataURL(`image/${type}`)
+        // download.download = 'PostMaker';
+        // download.innerText = 'Download!'
+        // document.body.appendChild(download)
         
     }
 

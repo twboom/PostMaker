@@ -22,12 +22,13 @@
         const canvas = document.getElementById('ctx');
 
         const myRenderer = new Renderer(myHTML, canvas)
-        myRenderer.render(0,0,300,300);
-        myRenderer.export('jpeg')
+        myRenderer.render(0,0,300,150);
+        
+        return myRenderer
 
        }
 
-       demo()
+       demo().export('jpeg')
    </script>
 </body>
 </html>
