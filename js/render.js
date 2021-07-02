@@ -15,6 +15,10 @@ class Renderer {
         const html = this.post;
         const ctx = this.context
 
+        // Fill background with background
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
+
         // Following code comes from https://stackoverflow.com/a/43724114/14445654
 
         var data = "data:image/svg+xml;charset=utf-8," + '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
@@ -28,24 +32,26 @@ class Renderer {
         ctx.drawImage(img, x, y);
         }
         img.src = data;
-
-        ctx.moveTo(0,0);
     }
 
     // Export it as an image
     export(type) {
 
-        var canvas = this.canvas
-        var img    = canvas.toDataURL(`image/${type}`);
-        document.write('<img src="'+img+'"/>');
+        // setTimeout(_ => {
+        //     var canvas = this.canvas
+        //     var img    = canvas.toDataURL(`image/${type}`);
+        //     document.write('<img src="'+img+'"/>');
+        // },2000)
 
-        // const canvas = this.canvas
+        setTimeout(_=>{
+            const canvas = this.canvas
 
-        // const download = document.createElement('a');
-        // download.href = canvas.toDataURL(`image/${type}`)
-        // download.download = 'PostMaker';
-        // download.innerText = 'Download!'
-        // document.body.appendChild(download)
+            const download = document.createElement('a');
+            download.href = canvas.toDataURL(`image/${type}`)
+            download.download = 'PostMaker';
+            download.innerText = 'Download!'
+            document.body.appendChild(download)
+        },2000)
         
     }
 
