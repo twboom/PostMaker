@@ -6,29 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PostMaker</title>
     <script src="js/render.js"></script>
+    <script src="js/post.js"></script>
 </head>
 <body>
-   <canvas id="ctx"></canvas> 
-   <div id="example">
-       <h1>Chuck</h1>
-       <h2>E</h2>
-       <h3>Cheese</h3>
-   </div>
+    <header>
+        <h1 class="header">PostMaker</h1>
+    </header>
 
-   <script>
-       function demo() {
+    <main>
+        <div id="controls"></div>
+        <div id="preview"></div>
+        <div id="output">
+            <canvas id="ctx"></canvas> 
+        </div>
+    </main>
 
-        const myHTML = document.getElementById('example');
-        const canvas = document.getElementById('ctx');
-
-        const myRenderer = new Renderer(myHTML, canvas)
-        myRenderer.render(0,0,300,150);
-        
-        return myRenderer
-
-       }
-
-       demo().export('jpeg')
-   </script>
+   
 </body>
 </html>
