@@ -1,35 +1,33 @@
-// Renderer for exporting
+// Renderer for exporting and for rendering to page
 class Renderer {
 
-    constructor(post, canvas) {
+    constructor(post, canvas, width, height) {
 
         this.post = post;
         this.canvas = canvas;
         this.context = canvas.getContext('2d');
+        this.width = width;
+        this.height = height;
 
     }
 
     // Rendering
-    render(x, y, width, height) {
+    render() {
 
         const html = this.post;
         const ctx = this.context
 
-        // Fill background with background
-        ctx.fillStyle = 'white';
-        ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
-
         // Following code comes from https://stackoverflow.com/a/43724114/14445654
 
-        var data = "data:image/svg+xml;charset=utf-8," + '<svg xmlns="http://www.w3.org/2000/svg" width="' + width + '" height="' + height + '">' +
-            '<foreignObject width="100%" height="100%">' +
-            this.html_to_xml(html) +
-            '</foreignObject>' +
-            '</svg>';
+        const data = "data:image/svg+xml;charset=utf-8," + '<svg xmlns="http://www.w3.org/2000/svg" width="' + this.width + '" height="' + this.height + '">' +
+                    '<foreignObject width="100%" height="100%">' +
+                    this.html_to_xml(html) +
+                    '</foreignObject>' +
+                    '</svg>';
 
         var img = new Image();
         img.onload = function() {
-        ctx.drawImage(img, x, y);
+            ctx.drawImage(img, 0, 0);
         }
         img.src = data;
     }
@@ -37,22 +35,39 @@ class Renderer {
     // Export it as an image
     export(type) {
 
-        // setTimeout(_ => {
-        //     var canvas = this.canvas
-        //     var img    = canvas.toDataURL(`image/${type}`);
-        //     document.write('<img src="'+img+'"/>');
-        // },2000)
+        let download;
 
-        setTimeout(_=>{
-            const canvas = this.canvas
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d')
 
-            const download = document.createElement('a');
+        const html = this.post;
+
+        // Fill background with background
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0,0, this.canvas.width, this.canvas.height)
+
+        // Following code comes from https://stackoverflow.com/a/43724114/14445654
+
+        const data = "data:image/svg+xml;charset=utf-8," + '<svg xmlns="http://www.w3.org/2000/svg" width="' + this.width + '" height="' + this.height + '">' +
+                    '<foreignObject width="100%" height="100%">' +
+                    this.html_to_xml(html) +
+                    '</foreignObject>' +
+                    '</svg>';
+
+        var img = new Image();
+        img.onload = function() {
+            ctx.drawImage(img, 0, 0);
+            download = document.createElement('a');
             download.href = canvas.toDataURL(`image/${type}`)
             download.download = 'PostMaker';
             download.innerText = 'Download!'
             document.body.appendChild(download)
-        },2000)
+        }
+        img.src = data;
         
+        canvas.remove()
+
+        return download;
     }
 
     // Utitlity code
